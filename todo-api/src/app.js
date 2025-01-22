@@ -1,5 +1,6 @@
 // src/app.js
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config({
   path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
 });
@@ -12,6 +13,16 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+// adding cors
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Request logging middleware
 app.use((req, res, next) => {
